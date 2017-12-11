@@ -7,7 +7,7 @@ IPv4 lookup in maxmind's CSVs.
 ``mvn clean compile assembly:single``
 
 1. Download CSVs from 
-http://dev.maxmind.com/geoip/legacy/geolite/
+https://dev.maxmind.com/geoip/geoip2/geolite2/
 2. Pass 
 GeoLite2-City-Blocks-IPv4.csv
 GeoLite2-City-Locations-en.csv
