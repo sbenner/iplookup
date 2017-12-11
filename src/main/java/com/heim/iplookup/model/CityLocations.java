@@ -1,10 +1,9 @@
-package com.heim.iplookup;
+package com.heim.iplookup.model;
 
 import lombok.Data;
 import lombok.ToString;
 
 @Data
-@ToString
 public class CityLocations {
     long geonameId;
     String localeCode;

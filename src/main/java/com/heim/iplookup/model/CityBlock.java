@@ -1,9 +1,9 @@
-package com.heim.iplookup;
+package com.heim.iplookup.model;
 
 import lombok.Data;
 
 @Data
-class CityBlock {
+public class CityBlock {
     int ip;
     int bitmask;
     long geonameId;

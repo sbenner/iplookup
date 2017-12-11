@@ -1,7 +1,8 @@
 package com.heim.iplookup;
 
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVRecord;
+import com.heim.iplookup.model.CityBlock;
+import com.heim.iplookup.model.CityLocations;
+import com.heim.iplookup.util.IpUtils;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -11,8 +12,8 @@ import java.util.*;
 
 public class IpLookup {
 
-    static   Map<Integer, CityBlock> cityBlocks;
-    static     Map<Long, CityLocations> cityLocations;
+    private static Map<Integer, CityBlock> cityBlocks;
+    private static Map<Long, CityLocations> cityLocations;
 
 
     static void initMaps(String[] args) throws Exception{

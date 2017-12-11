@@ -1,5 +1,7 @@
-package com.heim.iplookup;
+package com.heim.iplookup.util;
 
+import com.heim.iplookup.model.CityBlock;
+import com.heim.iplookup.model.CityLocations;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 
@@ -18,13 +20,13 @@ public class IpUtils {
                     "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
                     "([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
 
-    static Pattern pattern = Pattern.compile(IPADDRESS_PATTERN);
+    private static Pattern pattern = Pattern.compile(IPADDRESS_PATTERN);
 
-    static boolean testIp(String ip){
+    public static boolean testIp(String ip){
         return pattern.matcher(ip).matches();
     }
 
-    static int ipToInt(String ipAddress) {
+    private static int ipToInt(String ipAddress) {
 
         int result = 0;
 
@@ -38,7 +40,7 @@ public class IpUtils {
         return result;
     }
 
-     static Map<Integer, CityBlock> readIpCityBlockFile(Path file) {
+    public static Map<Integer, CityBlock> readIpCityBlockFile(Path file) {
 
         Map<Integer, CityBlock> cityBlocks = new TreeMap<>();
         try (
@@ -76,7 +78,7 @@ public class IpUtils {
         return cityBlocks;
     }
 
-     static Map<Long, CityLocations> readCityLocationsFile(Path file) {
+    public static Map<Long, CityLocations> readCityLocationsFile(Path file) {
 
         Map<Long, CityLocations> cityLocationsMap = new HashMap<>();
         try (
@@ -118,7 +120,7 @@ public class IpUtils {
     }
 
 
-     static boolean compare(int ip, int subnet, int bits) {
+    private static boolean compare(int ip, int subnet, int bits) {
         int mask = -1 << (32 - bits);
         return (subnet & mask) == (ip & mask);
     }
@@ -131,7 +133,7 @@ public class IpUtils {
                 + (ip & 0xFF);
     }
 
-     static void lookupIpAddress(String ip, Map<Integer, CityBlock> cityBlocks,
+    public static void lookupIpAddress(String ip, Map<Integer, CityBlock> cityBlocks,
                                         Map<Long, CityLocations> cityLocationsMap) {
         long ms = System.currentTimeMillis();
         Set<CityBlock> set = new HashSet<>();
