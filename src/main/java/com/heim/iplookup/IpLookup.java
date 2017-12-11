@@ -16,7 +16,7 @@ public class IpLookup {
     private static Map<Long, CityLocations> cityLocations;
 
 
-    static void initMaps(String[] args) throws Exception{
+    private static void initMaps(String[] args) throws Exception{
         long ms = System.currentTimeMillis();
 
         Path cityBlocksFile  = Paths.get(args[0]);
