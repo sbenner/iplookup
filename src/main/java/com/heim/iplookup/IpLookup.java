@@ -52,8 +52,11 @@ public class IpLookup {
             if (line.equals("quit")) {
                 System.exit(0);
             }
-            if (line.length() >= 7 && line.contains(".")) {
+            if (line.length() >= 7 && line.contains(".")&&
+                    IpUtils.testIp(line)) {
                 IpUtils.lookupIpAddress(line, cityBlocks, cityLocations);
+            }else{
+                System.out.println("wrong IP supplied");
             }
         }
 

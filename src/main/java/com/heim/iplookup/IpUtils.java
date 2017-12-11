@@ -8,8 +8,21 @@ import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class IpUtils {
+
+    private static final String IPADDRESS_PATTERN =
+            "^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
+                    "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
+                    "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
+                    "([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
+
+    static Pattern pattern = Pattern.compile(IPADDRESS_PATTERN);
+
+    static boolean testIp(String ip){
+        return pattern.matcher(ip).matches();
+    }
 
     static int ipToInt(String ipAddress) {
 
