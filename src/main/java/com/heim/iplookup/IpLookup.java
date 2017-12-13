@@ -40,8 +40,8 @@ public class IpLookup {
 
     public static void main(String[] args) throws Exception{
         if(args.length<2){
-            System.out.println("Please enter paths for input GeoLoc files");
-            System.out.println("IpLookup <geolite_city_file> <geolite_locations_file>");
+            System.out.println("Please enter paths for input GeoLoc files\n" +
+                                "IpLookup <geolite_city_file> <geolite_locations_file>");
             System.exit(1);
         }
 
@@ -56,8 +56,6 @@ public class IpLookup {
             if (line.length() >= 7 && line.contains(".")&&
                     IpUtils.testIp(line)) {
                 IpUtils.lookupIpAddress(line, cityBlocks, cityLocations);
-            }else{
-                System.out.println("wrong IP supplied");
             }
         }
 
