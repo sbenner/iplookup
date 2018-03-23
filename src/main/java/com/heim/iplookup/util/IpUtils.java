@@ -146,10 +146,11 @@ public class IpUtils {
         set.forEach(cb ->
         {
             if (compare(ipToInt(ip), cb.getIp(), cb.getBitmask())) {
+                System.out.println(ip);
                 System.out.println(cityLocationsMap.get(cb.getGeonameId()));
             }
         });
-        System.out.println("Took : " + (System.currentTimeMillis() - ms) + " MS");
+        System.out.println("\nLookup Took : " + (System.currentTimeMillis() - ms) + " MS\n");
     }
 
 }

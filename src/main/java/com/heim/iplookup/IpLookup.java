@@ -25,7 +25,8 @@ public class IpLookup {
         else
             throw new FileNotFoundException("GeoLite City Blocks file not found");
 
-        System.out.println("IP City Map " + cityBlocks.size() + " took : " + (System.currentTimeMillis() - ms) + " MS");
+        System.out.println("IP City Map " + cityBlocks.size() + "" +
+                " took : " + (System.currentTimeMillis() - ms) + " MS");
         ms = System.currentTimeMillis();
         Path cityLocationsFile  = Paths.get(args[1]);
         if(Files.exists(cityLocationsFile))
@@ -33,7 +34,9 @@ public class IpLookup {
         else
             throw new FileNotFoundException("GeoLite City Locations file not found");
 
-        System.out.println("City Locations Map " + cityLocations.size() + " took : " + (System.currentTimeMillis() - ms) + " MS");
+        System.out.println("City Locations Map " +
+                cityLocations.size() + " took : "
+                + (System.currentTimeMillis() - ms) + " MS");
 
     }
 
