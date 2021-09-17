@@ -3,6 +3,7 @@ package com.heim.iplookup;
 import com.heim.iplookup.model.CityBlock;
 import com.heim.iplookup.model.CityLocations;
 import com.heim.iplookup.util.IpUtils;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -10,6 +11,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
+@Slf4j
 public class IpLookup {
 
     private static Map<Integer, CityBlock> cityBlocks;
@@ -18,15 +20,13 @@ public class IpLookup {
 
     private static void initMaps(String[] args) throws Exception{
         long ms = System.currentTimeMillis();
-
         Path cityBlocksFile  = Paths.get(args[0]);
         if(Files.exists(cityBlocksFile))
             cityBlocks = IpUtils.readIpCityBlockFile(cityBlocksFile);
         else
             throw new FileNotFoundException("GeoLite City Blocks file not found");
 
-        System.out.println("IP City Map " + cityBlocks.size() + "" +
-                " took : " + (System.currentTimeMillis() - ms) + " MS");
+        log.info("IP City Map " + cityBlocks.size() + " took : " + (System.currentTimeMillis() - ms) + " MS");
         ms = System.currentTimeMillis();
         Path cityLocationsFile  = Paths.get(args[1]);
         if(Files.exists(cityLocationsFile))
@@ -34,16 +34,15 @@ public class IpLookup {
         else
             throw new FileNotFoundException("GeoLite City Locations file not found");
 
-        System.out.println("City Locations Map " +
-                cityLocations.size() + " took : "
-                + (System.currentTimeMillis() - ms) + " MS");
+        log.info("City Locations Map {} took {} MS ",cityLocations.size() ,
+                (System.currentTimeMillis() - ms));
 
     }
 
 
     public static void main(String[] args) throws Exception{
         if(args.length<2){
-            System.out.println("Please enter paths for input GeoLoc files\n" +
+            log.info("Please enter paths for input GeoLoc files\n" +
                                 "IpLookup <geolite_city_file> <geolite_locations_file>");
             System.exit(1);
         }

@@ -2,6 +2,7 @@ package com.heim.iplookup.util;
 
 import com.heim.iplookup.model.CityBlock;
 import com.heim.iplookup.model.CityLocations;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 
@@ -11,7 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 import java.util.regex.Pattern;
-
+@Slf4j
 public class IpUtils {
 
     private static final String IPADDRESS_PATTERN =
@@ -58,21 +59,21 @@ public class IpUtils {
                     String network = record.get("network");
                     String[] nw = network.split("/");
                     cb.setIp(ipToInt(nw[0]));
-                    cb.setBitmask(Integer.valueOf(nw[1]));
+                    cb.setBitmask(Integer.parseInt(nw[1]));
                     String accuracyRadius = record.get("accuracy_radius");
                     if (accuracyRadius != null && accuracyRadius.length() > 0)
                         cb.setAccuracyRadius(record.get("accuracy_radius"));
                     String geoNameId = record.get("geoname_id");
                     if (geoNameId != null && geoNameId.length() > 0)
-                        cb.setGeonameId(Long.valueOf(geoNameId));
+                        cb.setGeonameId(Long.parseLong(geoNameId));
                     cityBlocks.put(cb.getIp(), cb);
                 }
 
             } catch (Exception e) {
-                e.printStackTrace();
+                log.error(e.getMessage(),e);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         }
 
         return cityBlocks;
@@ -80,7 +81,7 @@ public class IpUtils {
 
     public static Map<Long, CityLocations> readCityLocationsFile(Path file) {
 
-        Map<Long, CityLocations> cityLocationsMap = new HashMap<>();
+        Map<Long, CityLocations> cityLocationsMap = new TreeMap<>();
         try (
                 BufferedReader reader
                         = new BufferedReader(new InputStreamReader(
@@ -93,7 +94,7 @@ public class IpUtils {
 
                 for (CSVRecord record : records) {
                     CityLocations cb = new CityLocations();
-                    cb.setGeonameId(Long.valueOf(record.get("geoname_id")));
+                    cb.setGeonameId(Long.parseLong(record.get("geoname_id")));
                     cb.setLocaleCode(record.get("locale_code"));
                     cb.setContinentCode(record.get("continent_code"));
                     cb.setContinentName(record.get("continent_name"));
@@ -110,10 +111,10 @@ public class IpUtils {
                 }
 
             } catch (Exception e) {
-                e.printStackTrace();
+                log.error(e.getMessage(),e);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         }
 
         return cityLocationsMap;
@@ -146,11 +147,10 @@ public class IpUtils {
         set.forEach(cb ->
         {
             if (compare(ipToInt(ip), cb.getIp(), cb.getBitmask())) {
-                System.out.println(ip);
-                System.out.println(cityLocationsMap.get(cb.getGeonameId()));
+                log.info(String.valueOf(cityLocationsMap.get(cb.getGeonameId())));
             }
         });
-        System.out.println("\nLookup Took : " + (System.currentTimeMillis() - ms) + " MS\n");
+        log.info("Took : {} MS ", (System.currentTimeMillis() - ms) );
     }
 
 }
